@@ -474,13 +474,37 @@ SQL
   echo -e "${G}✓ حذف شد${N}"
 }
 
+cmd_menu() {
+  banner
+  echo -e "${W}${BOLD}  گزینه‌ها:${N}"
+  echo
+  echo -e "    ${G}1)${N} نصب از گیت‌هاب"
+  echo -e "    ${G}2)${N} نصب لوکال (از پوشه فعلی)"
+  echo -e "    ${B}3)${N} آپدیت"
+  echo -e "    ${R}4)${N} حذف"
+  echo -e "    ${Y}5)${N} وضعیت"
+  echo -e "    ${M}6)${N} خروج"
+  echo
+  read -p "  انتخاب [1-6]: " choice
+  case $choice in
+    1) cmd_install ;;
+    2) LOCAL_MODE=1; LOCAL_SRC="$(pwd)"; cmd_install ;;
+    3) cmd_update ;;
+    4) cmd_remove ;;
+    5) systemctl status observatory-backend observatory-worker observatory-frontend nginx --no-pager ;;
+    6) exit 0 ;;
+    *) err "گزینه نامعتبر" ;;
+  esac
+}
+
 LOCAL_MODE="${LOCAL_MODE:-0}"
 LOCAL_SRC=""
 
-case "${1:-install}" in
+case "${1:-menu}" in
+  menu|"")            cmd_menu ;;
   install)            cmd_install ;;
   local)              LOCAL_MODE=1; LOCAL_SRC="${2:-$(pwd)}"; cmd_install ;;
   update)             cmd_update ;;
   remove|uninstall)   cmd_remove ;;
-  *) echo "Usage: $0 {install|local [path]|update|remove}"; exit 1 ;;
+  *) echo "Usage: $0 {menu|install|local [path]|update|remove}"; exit 1 ;;
 esac

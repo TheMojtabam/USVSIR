@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  background: #06070b;
+  color: #f0eee8;
+  min-height: 100vh;
+  letter-spacing: -0.005em;
+}
+
+html { scrollbar-gutter: stable; }
+body {
+  font-feature-settings: 'cv11', 'ss01';
+  overscroll-behavior: none;
+  position: relative;
+  min-width: 320px;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.14); }
+
+.grain::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9999;
+  opacity: 0.035; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+}
+
+.atmosphere::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 1000px 700px at 80% -10%, rgba(183, 148, 246, 0.10), transparent 50%),
+    radial-gradient(ellipse 800px 500px at 0% 100%, rgba(110, 231, 212, 0.06), transparent 50%);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #d4bdfa, #6ee7d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
